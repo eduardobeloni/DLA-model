@@ -1,0 +1,13 @@
+This is a simple project I've created ages ago when I was doing some research at the university. As simple as it is, it works fine. It simulates a celular automata which implements one single rule in the Diffusion-Litmited Aggregation set. Its pattern may represent the ice crystal growth, though the colours used are red and green for better contrast.
+
+The higher the concentration, the faster will be the aggregation. I'd say the ideal concentration percentage is 25% (default).
+
+Red coloured cells are always in movement (diffusion state); when they contact the green coloured ones, they aggregate and stop moving. Black spaces are empty.
+
+To compile, you'll need libgtkmm-2.4.
+
+Compile
+$ make
+
+Clean
+$ make clean
