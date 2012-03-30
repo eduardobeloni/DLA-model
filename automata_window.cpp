@@ -10,9 +10,7 @@ AutomataWindow::AutomataWindow():
 	run_btn("Start"),
 	stop_btn("Stop"),
 	apply_btn("Apply"),
-	dla(),
-	rand_adjustment(25.0, 10.0, 90.0, 5.0),
-	rand_spinbtn(rand_adjustment)
+	dla()
 {
 	this->set_border_width(10);
 	this->set_resizable(false);
@@ -23,10 +21,14 @@ AutomataWindow::AutomataWindow():
 	Gtk::HBox *conc_hbox = Gtk::manage(new Gtk::HBox(false, 10));
 	Gtk::Frame *conc_frame = Gtk::manage(new Gtk::Frame("Concentration Percentage"));
 	Gtk::HButtonBox *btn_box = Gtk::manage(new Gtk::HButtonBox);
+	Gtk::Adjustment *rand_setup =
+		Gtk::manage(new Gtk::Adjustment(25.0, 10.0, 90.0, 5.0));
+
+	rand_spinbtn.set_adjustment(*rand_setup);
+	dla.reset(rand_spinbtn.get_value_as_int());
 
 	this->add(*main_vbox);
 
-	dla.reset((int) rand_adjustment.get_value());
 	main_vbox->pack_start(dla);
 	main_vbox->pack_start(*conc_frame);
 	main_vbox->pack_start(*btn_box);

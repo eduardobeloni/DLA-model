@@ -6,7 +6,6 @@
 #include <gtkmm/window.h>
 #include <gtkmm/button.h>
 #include <gtkmm/spinbutton.h>
-#include <gtkmm/adjustment.h>
 
 class AutomataWindow : public Gtk::Window
 {
@@ -16,7 +15,6 @@ protected:
 				apply_btn;
 	DLA dla;
 	sigc::connection timer;
-	Gtk::Adjustment rand_adjustment;
 	Gtk::SpinButton rand_spinbtn;
 
 	virtual void on_run_button_clicked();
