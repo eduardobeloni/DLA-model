@@ -85,6 +85,7 @@ void AutomataWindow::on_stop_button_clicked()
 void AutomataWindow::on_apply_button_clicked()
 {
 	run_btn.set_label("Start");
+	run_btn.grab_focus();
 	dla.reset(rand_spinbtn.get_value_as_int());
 	dla.queue_draw();
 }
