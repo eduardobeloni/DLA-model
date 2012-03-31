@@ -64,7 +64,7 @@ void AutomataWindow::on_run_button_clicked()
 	rand_spinbtn.set_sensitive(false);
 	stop_btn.grab_focus();
 
-	// slot I wish to have called when timeout occurs
+	// method to be called on timeout: AutomataWindow::on_timeout
 	sigc::slot<bool> my_slot = sigc::mem_fun(*this, &AutomataWindow::on_timeout);
 
 	// connecting my_slot to Glib::signal_timeout(): slot, delay(ms)
@@ -95,5 +95,5 @@ bool AutomataWindow::on_timeout()
 	dla.next_state();
 	dla.queue_draw();
 
-	return true;	// keeps on timeout until stop button
+	return true; // keeps on ticking until stop button is clicked
 }

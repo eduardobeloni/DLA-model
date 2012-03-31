@@ -37,11 +37,11 @@ void DLA::on_realize()
 {
 	Gtk::DrawingArea::on_realize();
 
-	// a colormap to allocate resources
-	Glib::RefPtr<Gdk::Colormap> curr_colormap = this->get_default_colormap();
-	curr_colormap->alloc_color(red_colour);
-	curr_colormap->alloc_color(green_colour);
-	curr_colormap->alloc_color(black_colour);
+	// a colourmap to allocate resources
+	Glib::RefPtr<Gdk::Colormap> curr_colourmap = this->get_default_colormap();
+	curr_colourmap->alloc_color(red_colour);
+	curr_colourmap->alloc_color(green_colour);
+	curr_colourmap->alloc_color(black_colour);
 
 	// getting window to create graphical contexts
 	Glib::RefPtr<Gdk::Window> curr_win = this->get_window();
