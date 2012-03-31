@@ -7,7 +7,8 @@ DLA::DLA():
 	red_colour("red"),
 	green_colour("green"),
 	black_colour("black"),
-	down_right(0)
+	down_right(0),
+	final_state(false)
 {
 	time_t t;
 	time(&t);
@@ -58,6 +59,8 @@ void DLA::on_realize()
 
 bool DLA::on_expose_event(GdkEventExpose *e)
 {
+	bool check_final_state = true;
+
 	// getting the current window to draw
 	Glib::RefPtr<Gdk::Window> curr_win = this->get_window();
 
@@ -77,11 +80,16 @@ bool DLA::on_expose_event(GdkEventExpose *e)
 		for (int x = 1; x < SIZE; x++)
 		{
 			if (sites[y][x] == DIFFUSION)
+			{
+				check_final_state = false;
 				curr_win->draw_point(red_gc, x, y);
+			}
 			else if (sites[y][x] == AGREGATION)
 				curr_win->draw_point(green_gc, x, y);
 		}
 	}
+
+	final_state = check_final_state;
 
 	return true;
 }
@@ -139,4 +147,9 @@ void DLA::next_state()
 	}
 
 	down_right = down_right ? 0 : 1;
+}
+
+bool DLA::final_state_reached()
+{
+	return final_state;
 }

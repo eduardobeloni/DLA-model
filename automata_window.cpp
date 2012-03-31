@@ -85,6 +85,7 @@ void AutomataWindow::on_stop_button_clicked()
 void AutomataWindow::on_apply_button_clicked()
 {
 	run_btn.set_label("Start");
+	run_btn.set_sensitive(true);
 	run_btn.grab_focus();
 	dla.reset(rand_spinbtn.get_value_as_int());
 	dla.queue_draw();
@@ -94,6 +95,14 @@ bool AutomataWindow::on_timeout()
 {
 	dla.next_state();
 	dla.queue_draw();
+
+	if (dla.final_state_reached())
+	{
+		on_stop_button_clicked();     // stopping simulation;
+		run_btn.set_sensitive(false); // making run non-clickable
+		apply_btn.grab_focus();
+		return false;
+	}
 
 	return true; // keeps on ticking until stop button is clicked
 }
