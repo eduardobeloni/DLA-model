@@ -10,6 +10,7 @@ AutomataWindow::AutomataWindow():
 	run_btn("Start"),
 	stop_btn("Stop"),
 	apply_btn("Apply"),
+	final_state_text("                   "),
 	dla()
 {
 	this->set_border_width(10);
@@ -20,7 +21,7 @@ AutomataWindow::AutomataWindow():
 	Gtk::VBox *main_vbox = Gtk::manage(new Gtk::VBox(false, 10));
 	Gtk::HBox *conc_hbox = Gtk::manage(new Gtk::HBox(false, 10));
 	Gtk::Frame *conc_frame = Gtk::manage(new Gtk::Frame("Concentration Percentage"));
-	Gtk::HButtonBox *btn_box = Gtk::manage(new Gtk::HButtonBox);
+	Gtk::HBox *lower_box = Gtk::manage(new Gtk::HBox(false, 3));
 	Gtk::Adjustment *rand_setup =
 		Gtk::manage(new Gtk::Adjustment(25.0, 10.0, 90.0, 5.0));
 
@@ -31,15 +32,16 @@ AutomataWindow::AutomataWindow():
 
 	main_vbox->pack_start(dla);
 	main_vbox->pack_start(*conc_frame);
-	main_vbox->pack_start(*btn_box);
+	main_vbox->pack_start(*lower_box);
 
 	conc_frame->add(*conc_hbox);
 	conc_hbox->pack_start(rand_spinbtn);
 	conc_hbox->pack_start(apply_btn);
 	conc_hbox->set_border_width(5);
 
-	btn_box->pack_start(run_btn);
-	btn_box->pack_start(stop_btn);
+	lower_box->pack_start(run_btn);
+	lower_box->pack_start(final_state_text);
+	lower_box->pack_start(stop_btn);
 
 	run_btn.signal_clicked().connect(sigc::mem_fun(*this, &AutomataWindow::on_run_button_clicked));
 	run_btn.set_sensitive(true);
@@ -87,6 +89,7 @@ void AutomataWindow::on_apply_button_clicked()
 	run_btn.set_label("Start");
 	run_btn.set_sensitive(true);
 	run_btn.grab_focus();
+	final_state_text.set_text("                   ");
 	dla.reset(rand_spinbtn.get_value_as_int());
 	dla.queue_draw();
 }
@@ -101,6 +104,7 @@ bool AutomataWindow::on_timeout()
 		on_stop_button_clicked();     // stopping simulation;
 		run_btn.set_sensitive(false); // making run non-clickable
 		apply_btn.grab_focus();
+		final_state_text.set_text("Final state reached");
 		return false;
 	}
 
