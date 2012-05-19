@@ -1,20 +1,28 @@
+CXX ?= g++
+SRC = $(wildcard *.cpp)
+OBJ = $(SRC:.cpp=.o)
+
+TARGET = dla_model
+
 CXXFLAGS = -O3 -Wall -pipe
 CXXFLAGS += `pkg-config --cflags gtkmm-2.4`
 LDLIBS += `pkg-config --libs gtkmm-2.4`
 
-all: dla_model
+all: $(TARGET)
 
-dla_model: main.o automata_window.o dla.o
-	g++ main.o automata_window.o dla.o -o dla_model $(CXXFLAGS) $(LDLIBS)
+# $^ tells make to compile all prerequisites
+$(TARGET): $(OBJ)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDLIBS)
 
+# $<: compile only the first prerequisite, not all of them
 main.o: main.cpp
-	g++ -c $(CXXFLAGS) main.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 automata_window.o: automata_window.cpp
-	g++ -c $(CXXFLAGS) automata_window.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 dla.o: dla.cpp dla.h
-	g++ -c $(CXXFLAGS) dla.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf *.o dla_model
+	rm -rf *.o $(TARGET)
