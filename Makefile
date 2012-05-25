@@ -1,6 +1,7 @@
 CXX ?= g++
 SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
+DEP = $(OBJ:.o=.d)
 
 TARGET = dla_model
 
@@ -14,15 +15,12 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDLIBS)
 
+-include $(DEP)
+
 # $<: compile only the first prerequisite, not all of them
-main.o: main.cpp
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-automata_window.o: automata_window.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-dla.o: dla.cpp dla.h
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) -MM $(CFLAGS) $*.cpp > $*.d
 
 clean:
-	rm -rf *.o $(TARGET)
+	rm -rf *.o $(TARGET) *.d
